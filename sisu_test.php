@@ -33,7 +33,8 @@ $result = mysqli_query($conn,"SELECT * FROM KONTO_SISU WHERE Konto_id=(SELECT Ko
             }
             
             /* Modal Content */
-            .modal-content {
+            .modal-content, .modal-content2 {
+              display: none;
               background-color: #fefefe;
               margin: auto;
               padding: 20px;
@@ -75,12 +76,6 @@ $result = mysqli_query($conn,"SELECT * FROM KONTO_SISU WHERE Konto_id=(SELECT Ko
         }
         header {float: right;}
         
-        .change {
-            float:right;
-            margin-right: 50px;
-            margin-top: 50px;
-        }
-
     </style>
  </head>
 <body>
@@ -96,28 +91,27 @@ if (mysqli_num_rows($result) > 0) {
   <table>
   
   <tr>
-    <td>Content ID</td>
     <td>Date</td>
     <td>Type</td>
     <td>Category</td>
     <td>Time</td> 
     <td>Notes</td>
     <td>Tags</td>
+    <td>Update rows</td>
   </tr>
 <?php
 $i=0;
 while($row = mysqli_fetch_array($result)) {
 ?>
 <tr>
-    <td><?php echo $row["Sisu_id"]; ?></td>
     <td><?php echo $row["Kuupaev"]; ?></td>
     <td><?php echo $row["Tyyp"]; ?></td>
     <td><?php echo $row["Kategooria"]; ?></td>
     <td><?php echo $row["Aeg"]; ?></td>
     <td><?php echo $row["Marge"]; ?></td>
     <td><?php echo $row["Silt"]; ?></td>
+    <td><button class="myBtn2">Change</button></td>
 </tr>
-
 <?php
 $i++;
 }
@@ -136,41 +130,7 @@ else{
     <meta charset="utf-8">
 </head>
   <body>
-    <div class="change">
-    <form method="post" action="process-update.php">
-	    Card ID<br>
-	    <input type="number" name="ID">
-	    <br>
-		Date (YYYY-MM-DD)<br>
-		<input type="text" name="date">
-		<br>
-		Type<br>
-		<select id="type" name="type">
-		    <option value="Private project">Private project</option>
-		    <option value="WS task">WS task</option>
-		    <option value="ES task">ES task</option>
-		    <option value="competition">Competition</option>
-		</select>
-		<br>
-		Category<br>
-		<select id="category" name="category">
-		    <option value="Design">Design</option>
-		    <option value="Font-End">Front-End</option>
-		    <option value="Back-End">Back-End</option>
-		</select>
-		<br>
-		Time (hours)<br>
-		<input type="number" name="time" min="1" max="24">
-		<br>
-		Notes<br>
-		<input type="text" name="notes">
-		<br>
-		Tags<br>
-		<input type="text" name="tags">
-		<br><br>
-		<input type="submit" name="save" value="submit">
-    </form>
-</div>
+      <a href="process-update.php?id=<?php echo $row["Sisu_id"]; ?>"> Update</a>
       <!-- The Modal  ADD NEW-->
     <div id="myModal" class="modal">
     
@@ -210,20 +170,64 @@ else{
 	    </form>
         </div>
     </div>
+    
+    <!-- Modal content2 -->
+    <div class="modal-content2">
+        <span class="close">&times;</span>
+        <form method="post" action="process.php">
+	    ID<br>
+	    <input type="number" name="ID" min="1" max="2">
+	    <br>
+		Date (YYYY-MM-DD)<br>
+		<input type="text" name="date">
+		<br>
+		Type<br>
+		<select id="type" name="type">
+		    <option value="Private project">Private project</option>
+		    <option value="WS task">WS task</option>
+		    <option value="ES task">ES task</option>
+		    <option value="competition">Competition</option>
+		</select>
+		<br>
+		Category<br>
+		<select id="category" name="category">
+		    <option value="Design">Design</option>
+		    <option value="Font-End">Front-End</option>
+		    <option value="Back-End">Back-End</option>
+		</select>
+		<br>
+		Time (hours)<br>
+		<input type="number" name="time" min="1" max="24">
+		<br>
+		Notes<br>
+		<input type="text" name="notes">
+		<br>
+		Tags<br>
+		<input type="text" name="tags">
+		<br><br>
+		<input type="submit" name="save" value="submit">
+	    </form>
+        </div>
     <button id="myBtn">Add new</button>
-    </div>
 <script>
 // Get the modal
 var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
 var btn = document.getElementById("myBtn");
+var btn2 = document.getElementById("myBtn2");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal 
 btn.onclick = function() {
+  modal.style.display = "block";
+  modal-content2.style.display = "hidden";
+  
+}
+
+btn2.onclick = function() {
   modal.style.display = "block";
 }
 
@@ -238,6 +242,7 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
 </script>
   </body>
 </html>

@@ -22,8 +22,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <body>
     <h1 class="my-5">Hey, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. tere tulemast enda lehele.</h1>
     <p>
-        <a href="logout.php" class="btn btn-danger ml-3">Logi enda kasutajast välja</a>
         <a href="sisu.php" class="btn btn-danger ml-2">Vaata enda kasutaja sisu</a>
+        <a href="logout.php" class="btn btn-danger ml-3">Logi enda kasutajast välja</a>
+
     </p>
 </body>
 </html>
